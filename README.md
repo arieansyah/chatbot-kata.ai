@@ -7,7 +7,9 @@ Project is created with:
 
 # How to use
 add line chatbot
-![alt text](https://qr-official.line.me/sid/L/522bqvfx.png)
+<br>
+<img src="https://qr-official.line.me/sid/L/522bqvfx.png"/>
+<br>
 try send message to chatbot with word (info cuaca or order)
 
 # Installation
