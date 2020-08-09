@@ -8,7 +8,7 @@ Project is created with:
 # How to use
 add line chatbot
 <br>
-![qrcode](https://qr-official.line.me/sid/L/522bqvfx.png)
+![qrcode](https://github.com/arieansyah/chatbot-kata.ai/blob/master/assets/qrcode.png)
 <br>
 try send message to chatbot with word (info cuaca or order)
 
