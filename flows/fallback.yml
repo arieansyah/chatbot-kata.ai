@@ -1,0 +1,45 @@
+fallback: true
+intents:
+  fallbackintent:
+    type: text
+    initial: false
+    fallback: false
+  help:
+    type: text
+    initial: true
+    fallback: false
+    classifier:
+      nlu: help
+      match: helpMessage
+states:
+  init:
+    transitions:
+      handlingMessage:
+        condition: intent=="fallbackintent"
+      greetingMessage:
+        fallback: true
+        condition: intent=="help"
+    initial: true
+    end: false
+  handlingMessage:
+    transitions:
+      handlingMessage:
+        fallback: true
+    action: exceptionMessage
+    end: true
+  greetingMessage:
+    transitions:
+      greetingMessage:
+        fallback: true
+    action: Help
+    end: true
+actions:
+  exceptionMessage:
+    type: text
+    options:
+      text: "Maaf, Girex lagi belajar bahasa manusia hehe. coba girex pelajari dulu hehe"
+  Help:
+    type: text
+    options:
+      text: mau cek info cuaca atau order?
+methods: {}

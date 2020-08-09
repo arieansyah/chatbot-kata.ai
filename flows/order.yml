@@ -1,0 +1,132 @@
+intents:
+  orderTxt:
+    type: text
+    initial: true
+    fallback: false
+    classifier:
+      nlu: order
+      match: orderProduk
+  pilihProduk:
+    type: data
+    initial: false
+    fallback: false
+    condition: payload.type=="kacamata"
+  reenter:
+    type: command
+    initial: false
+    fallback: false
+    condition: content=="reenter"
+  produkQuantity:
+    type: text
+    initial: false
+    fallback: false
+    classifier:
+      nlu: quantity
+  "yes":
+    type: text
+    initial: false
+    fallback: false
+    classifier:
+      nlu: yesno
+      match: "yes"
+  "no":
+    type: text
+    initial: false
+    fallback: false
+    classifier:
+      nlu: yesno
+      match: "no"
+states:
+  init:
+    transitions:
+      showProduk:
+        condition: intent=="orderTxt"
+    initial: true
+  showProduk:
+    transitions:
+      produkQuantity:
+        condition: intent=="pilihProduk"
+        mapping:
+          context.kacamata: payload.kacamata
+      showProduk:
+        fallback: true
+    action:
+      - name: produk
+      - name: tanyaOptions
+  produkQuantity:
+    transitions:
+      confirmOrder:
+        condition: intent == "produkQuantity"
+        mapping:
+          context.quantity: attributes.quantity
+          context.answer: "null"
+      produkQuantity:
+        fallback: true
+    action: askQuantity
+  confirmOrder:
+    transitions:
+      finish:
+        fallback: true
+      confirmOrder:
+        fallback: true
+    action: askConfirm
+    transit:
+      context.answer: intent
+  finish:
+    transitions:
+      finish:
+        fallback: true
+    action:
+      - name: sayThanks
+        condition: context.answer=="yes"
+      - name: sayCancel
+        condition: context.answer=="no"
+    end: true
+actions:
+  itemOptions:
+    type: text
+    options:
+      text: "Kami Punya Kacamata Premium 7 Sungless, Premium 7, Premium 5"
+  tanyaOptions:
+    type: text
+    options:
+      text: Silahkan pilih item kami
+  produk:
+    type: template
+    options:
+      type: carousel
+      items:
+        - title: K-ION NANO PM7
+          text: KACAMATA K-ION NANO PM7
+          thumbnailImageUrl: "https://girexshop.k-mart.co.id/assets/img/product/438/mlt_image2019111117:33:24.jpg?103143"
+          actions:
+            - type: postback
+              label: PM7
+              payload:
+                type: kacamata
+                kacamata: PM7
+        - title: K-ION NANO PM5
+          text: KACAMATA K-ION NANO PM5
+          thumbnailImageUrl: "https://girexshop.k-mart.co.id/assets/img/product/406/mlt_image0.jpg?103302"
+          actions:
+            - type: postback
+              label: PM5
+              payload:
+                type: kacamata
+                kacamata: PM5
+  askQuantity:
+    type: text
+    options:
+      text: mau pesan berapa banyak?
+  askConfirm:
+    type: text
+    options:
+      text: kamu order $(context.kacamata) ?
+  sayThanks:
+    type: text
+    options:
+      text: Terima Kasih sudah berbelanja
+  sayCancel:
+    type: text
+    options:
+      text: Pesanan kamu sudah kami cancel. terima kasih selamat datang kembali

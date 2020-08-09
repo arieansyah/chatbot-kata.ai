@@ -1,0 +1,69 @@
+name: TheGirexShop
+deleted_at: null
+desc: Terpercaya 100%
+flows:
+    fallback: $include(./flows/fallback.yml)
+    order: $include(./flows/order.yml)
+    cuaca: $include(./flows/cuaca.yml)
+nlus:
+    order:
+        type: keyword
+        options:
+            keywords:
+                orderProduk:
+                    - order
+                    - mau order dong
+                    - order please
+                    - order plz
+                    - pesan bro
+                    - pesan
+                    - saya mau pesan
+    quantity:
+        type: regex
+        options:
+            regex: '[1-9]'
+    yesno:
+        type: keyword
+        options:
+            keywords:
+                'yes':
+                    - 'yes'
+                    - oke
+                    - gas
+                    - sip
+                'no':
+                    - 'no'
+                    - tidak
+                    - enggak
+                    - enggak jadi
+                    - enggak jadi deh
+    news:
+        type: keyword
+        options:
+            keywords:
+                weather:
+                    - info cuaca
+                    - cuaca
+    location:
+        type: keyword
+        options:
+            keywords:
+                city:
+                    - bandung
+                    - jakarta
+                    - surabaya
+    infoCuaca:
+        type: keyword
+        options:
+            keywords:
+                infoCuaca:
+                    - cuaca
+                    - info cuaca
+    help:
+        type: keyword
+        options:
+            keywords:
+                helpMessage:
+                    - tolong
+                    - help
+tag: null
